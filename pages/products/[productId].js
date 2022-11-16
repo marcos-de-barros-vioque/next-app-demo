@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 const ProductDetail = () => {
     const router = useRouter();
     const { productId } = router.query;
-
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
@@ -16,17 +15,19 @@ const ProductDetail = () => {
              const data = await response.json()
              setProduct(data);
             } else {
-              throw new Error(
-                `Fetch fehlgeschlagen mit Status: ${response.status}`
-              );
-           } 
+              throw new Error(`Fetch fehlgeschlagen mit Status: ${response.status}`);
+            } 
            } catch (error) {
-            console.log(error);
-            alert(error.message);
+            alert(error);
            }
          };
-          getProduct();
-         }, []);
+           console.log("productId", productId);
+            if (productId) {
+            getProduct();
+         }
+         }, [productId]);
+
+           console.log(router.query);
 
     return (
     <>
